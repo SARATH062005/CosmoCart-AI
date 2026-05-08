@@ -81,8 +81,8 @@ OPENROUTER_API_KEY = "your_key_here"
 
 ## 👥 Meet the Team
 Developed with passion by dedicated contributors:
-*   **Sarath** (@SARATH062005) — Lead Developer & AI Architect
-
+*   **Sanjay** (@sanjayCodeXdev) — Lead Developer & AI Architect
+*   **Sarath** (@SARATH062005) — Computer vision Specialist
 ---
 
 ## 🛡️ Disclaimer
