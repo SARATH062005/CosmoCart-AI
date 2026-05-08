@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casmocart AI | Next-Gen Skincare Intelligence</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap" rel="stylesheet">
+    <!-- Marked.js for professional reports -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <style>
+        :root {
+            --primary: #c9a0dc;
+            --secondary: #2d3436;
+            --accent: #ff7675;
+            --bg: #0b0b0e;
+            --glass: rgba(255, 255, 255, 0.06);
+            --border: rgba(255, 255, 255, 0.1);
+            --success: #00ff88;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: #fff;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Particles/Glow background */
+        body::before {
+            content: '';
+            position: fixed;
+            top: -20%;
+            left: -20%;
+            width: 140%;
+            height: 140%;
+            background: radial-gradient(circle at 30% 30%, rgba(201, 160, 220, 0.1), transparent),
+                radial-gradient(circle at 70% 70%, rgba(255, 118, 117, 0.1), transparent);
+            z-index: -1;
+            filter: blur(100px);
+        }
+
+        header {
+            z-index: 100;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            letter-spacing: 2px;
+            background: linear-gradient(135deg, #fff, var(--primary));
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 2px;
+        }
+
+        .subtitle {
+            font-size: 0.8rem;
+            color: #888;
+            font-weight: 300;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+        }
+
+        .container {
+            max-width: 1600px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 1rem 1.5rem 1.5rem 1.5rem;
+            display: grid;
+            grid-template-columns: 500px 1fr;
+            gap: 1.5rem;
+            flex: 1;
+            min-height: 650px;
+            /* Important for grid item sizing in flex container */
+        }
+
+        .glass-card {
+            background: var(--glass);
+            border: 1px solid var(--border);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 1.5rem;
+            border-radius: 20px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .glass-card:hover {
+            border-color: var(--primary);
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin: 1rem 0;
+        }
+
+        .stat-box {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-label {
+            font-size: 0.7rem;
+            color: #888;
+            text-transform: uppercase;
+        }
+
+        .stat-val {
+            font-size: 1.1rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary);
+            width: 0%;
+            transition: width 1s ease;
+        }
+
+        /* Video Feed */
+        .video-container {
+            position: relative;
+            border-radius: 15px;
+            overflow: hidden;
+            border: 2px solid var(--border);
+            box-shadow: 0 0 30px rgba(201, 160, 220, 0.1);
+            aspect-ratio: 4/3;
+        }
+
+        #videoFeed {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .scan-overlay {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            font-size: 0.7rem;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 4px 8px;
+            border-radius: 4px;
+            color: var(--success);
+            border: 1px solid var(--success);
+        }
+
+        /* Forms */
+        .user-field {
+            margin-top: 1rem;
+        }
+
+        label {
+            font-size: 0.8rem;
+            color: #aaa;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border);
+            padding: 0.8rem;
+            border-radius: 10px;
+            color: #fff;
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        input:focus {
+            border-color: var(--primary);
+        }
+
+        .btn-primary {
+            width: 100%;
+            padding: 1rem;
+            border-radius: 10px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .btn-scan {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .btn-scan:hover {
+            box-shadow: 0 0 20px rgba(201, 160, 220, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .btn-ai {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .btn-ai:hover {
+            background: var(--primary);
+            color: #000;
+        }
+
+        /* Report */
+        .report-section {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            /* Prevent parent from scrolling */
+        }
+
+        #reportOutput {
+            flex: 1;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+            line-height: 1.7;
+            overflow-y: auto;
+            min-height: 0;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) transparent;
+        }
+
+        #reportOutput::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        #reportOutput::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 10px;
+        }
+
+        #reportOutput h1,
+        #reportOutput h2,
+        #reportOutput h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 0.5rem 0;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 5px;
+        }
+
+        #reportOutput p {
+            margin-bottom: 1rem;
+            color: #ddd;
+        }
+
+        #reportOutput ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        #reportOutput table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        #reportOutput td,
+        #reportOutput th {
+            padding: 10px;
+            border: 1px solid var(--border);
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        #reportOutput th {
+            background: rgba(201, 160, 220, 0.1);
+        }
+
+        @keyframes pulse {
+            0% {
+                opacity: 0.4;
+            }
+
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: 0.4;
+            }
+        }
+
+        .loading-text {
+            animation: pulse 1.5s infinite;
+            color: var(--primary);
+            text-align: center;
+            padding: 50px;
+        }
+
+        @media (max-width: 1024px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* --- PRINT & EXPORT STYLING --- */
+        @media print {
+            body {
+                background: #fff !important;
+                color: #000 !important;
+            }
+
+            .glass-card,
+            header,
+            .btn-primary,
+            .stats-grid,
+            .user-field,
+            .video-container,
+            #status {
+                display: none !important;
+            }
+
+            .container {
+                display: block !important;
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+
+            .report-section {
+                display: block !important;
+                width: 100% !important;
+                border: none !important;
+                box-shadow: none !important;
+            }
+
+            #reportOutput {
+                background: #fff !important;
+                color: #000 !important;
+                max-height: none !important;
+                overflow: visible !important;
+                padding: 0 !important;
+            }
+
+            #reportOutput h1,
+            #reportOutput h2,
+            #reportOutput h3 {
+                color: #000 !important;
+                border-bottom: 2px solid #000 !important;
+            }
+        }
+
+        .export-btn {
+            background: rgba(201, 160, 220, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 5px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .export-btn:hover {
+            background: var(--primary);
+            color: #000;
+            box-shadow: 0 0 15px rgba(201, 160, 220, 0.3);
+        }
+
+        .auth-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gated {
+            transition: 0.5s filter, 0.5s opacity;
+        }
+
+        .medical-disclaimer {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: rgba(255, 118, 117, 0.05);
+            border: 1px solid rgba(255, 118, 117, 0.2);
+            border-radius: 10px;
+            font-size: 0.8rem;
+            color: var(--accent);
+            text-align: center;
+            font-style: italic;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header
+        style="display:grid; grid-template-columns: 1fr auto 1fr; align-items:center; padding: 0.5rem 2rem; border-bottom: 1px solid var(--border); background: var(--glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 100;">
+        <div></div> <!-- Left Spacer for absolute centering -->
+        <div style="text-align:center;">
+            <h1>CASMOCART AI</h1>
+            <p class="subtitle" style="font-size: 0.7rem; letter-spacing: 5px;">Precision Dermatological Intelligence
+            </p>
+        </div>
+        <div style="display:flex; justify-content:flex-end; align-items:center; gap: 15px;">
+            <span id="userBadge"
+                style="font-size:0.8rem; color:var(--success); display:none; background:rgba(0,255,136,0.1); padding:4px 12px; border-radius:20px; border:1px solid var(--success);">●
+                Active Session: <strong id="activeUser">Guest</strong></span>
+            <button id="loginOpenBtn" class="export-btn" style="padding: 8px 20px;">Patient Login /
+                Registration</button>
+        </div>
+    </header>
+
+    <!-- Auth Overlay -->
+    <div id="authOverlay" class="auth-modal" style="display: flex;">
+        <div class="glass-card" style="width:450px; max-height: 90vh; overflow-y:auto;">
+            <div style="text-align:center; margin-bottom:2rem;">
+                <h2 style="color:var(--primary);">Secure Access</h2>
+                <p style="font-size:0.8rem; color:#888;">Biometric & Password Authentication</p>
+            </div>
+
+            <div id="loginForm">
+                <div class="user-field">
+                    <label>PATIENT NAME</label>
+                    <input type="text" id="loginName" placeholder="Enter your registered name">
+                </div>
+                <div class="user-field">
+                    <label>PASSWORD</label>
+                    <input type="password" id="loginPass" placeholder="••••••••">
+                </div>
+                <p style="font-size:0.7rem; color:#888; margin-top:10px; text-align:center;">Biometric verification will
+                    be attempted but is optional.</p>
+                <button id="loginBtn" class="btn-primary btn-scan">AUTHORIZE & ENTER</button>
+                <p style="text-align:center; margin-top:1.5rem; font-size:0.8rem;">New Patient? <a href="#"
+                        id="toSignup" style="color:var(--primary);">Create Biometric Profile</a></p>
+            </div>
+
+            <div id="signupForm" style="display:none;">
+                <div class="user-field">
+                    <label>FULL NAME</label>
+                    <input type="text" id="signName" placeholder="e.g. Sarah Connor">
+                </div>
+                <div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">
+                    <div class="user-field">
+                        <label>AGE</label>
+                        <input type="number" id="signAge" placeholder="25">
+                    </div>
+                    <div class="user-field">
+                        <label>BUDGET</label>
+                        <select id="signBudget"
+                            style="width:100%; padding:0.8rem; border-radius:10px; background:rgba(255,255,255,0.05); color:#fff; border:1px solid var(--border);">
+                            <option value="Low">Low</option>
+                            <option value="Mid" selected>Mid</option>
+                            <option value="High">High</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="user-field">
+                    <label>PRIMARY CONCERNS</label>
+                    <input type="text" id="signConcerns" placeholder="Acne, Redness, etc.">
+                </div>
+                <div class="user-field">
+                    <label>SECURE PASSWORD</label>
+                    <input type="password" id="signPass" placeholder="Min 6 characters">
+                </div>
+                <div
+                    style="background:rgba(255,118,117,0.05); padding:10px; border-radius:10px; margin-top:1rem; border:1px dashed #ff7675; text-align:center;">
+                    <p style="font-size:0.7rem; color: #ff7675; margin-bottom:5px;">⚠️ BIOMETRIC REGISTRATION COMPULSORY
+                    </p>
+                    <p style="font-size:0.8rem; color:#fff;">Please look at the camera to save your face ID</p>
+                </div>
+                <button id="signupBtn" class="btn-primary btn-ai">REGISTER BIOMETRICS</button>
+                <p style="text-align:center; margin-top:1.5rem; font-size:0.8rem;">Already registered? <a href="#"
+                        id="toLogin" style="color:var(--primary);">Login</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container gated" style="filter: blur(10px); pointer-events: none; opacity: 0.5;">
+        <!-- Left Panel -->
+        <div class="glass-card">
+            <div id="status" style="color:var(--success); font-size:0.8rem; margin-bottom:10px; letter-spacing:1px;">🔴
+                SYSTEM LIVE</div>
+            <div class="video-container">
+                <img id="videoFeed" src="/video_feed">
+                <div class="scan-overlay">NEURAL MESH ACTIVE</div>
+            </div>
+
+            <button id="scanBtn" class="btn-primary btn-scan">CAPTURE BIOMETRIC ANALYSIS</button>
+
+            <!-- Health Dashboard -->
+            <div class="stats-grid">
+                <div class="stat-box">
+                    <div class="stat-label">Skin Smoothness</div>
+                    <div class="stat-val" id="smoothScore">--</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="smoothBar"></div>
+                    </div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">Lipid Balance</div>
+                    <div class="stat-val" id="lipidVal">--</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="lipidBar"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="user-field">
+                <label>PATIENT IDENTITY</label>
+                <input type="text" id="userName" placeholder="Biometric identifying...">
+            </div>
+            <div class="user-field">
+                <label>CONSULTATION QUERY</label>
+                <input type="text" id="userQuery" placeholder="Ask about routine or concerns...">
+            </div>
+
+            <button id="analyzeBtn" class="btn-primary btn-ai">REQUEST EXPERT REPORT</button>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="glass-card report-section">
+            <h2
+                style="margin-bottom:1.5rem; color:var(--primary); font-size:1.2rem; display:flex; justify-content:space-between; align-items:center;">
+                CONSULTATION REPORT
+                <div style="display:flex; gap:10px; align-items:center;">
+                    <button onclick="window.print()" class="export-btn">EXPORT PDF</button>
+                    <span id="timestamp" style="font-size:0.7rem; color:#555; font-weight:400;">AWAITING SCAN</span>
+                </div>
+            </h2>
+            <div id="reportOutput">
+                <div style="text-align:center; padding-top:120px; opacity:0.2;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/3063/3063176.png"
+                        style="width:80px; filter:invert(1);">
+                    <p style="margin-top:20px; font-weight:300;">Initiate scan for dermatological breakdown.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const medicalDisclaimerHTML = `
+            <div class="medical-disclaimer">
+                <strong>Disclaimer:</strong> ⚠️ MEDICAL DISCLAIMER: This AI analysis is for informational purposes only. Always consult a professional doctor or board-certified dermatologist for severe health issues or persistent skin conditions.
+            </div>
+        `;
+
+        const loginOpenBtn = document.getElementById('loginOpenBtn');
+        const authOverlay = document.getElementById('authOverlay');
+        const loginForm = document.getElementById('loginForm');
+        const signupForm = document.getElementById('signupForm');
+        const toSignup = document.getElementById('toSignup');
+        const toLogin = document.getElementById('toLogin');
+        const loginBtn = document.getElementById('loginBtn');
+        const signupBtn = document.getElementById('signupBtn');
+        const gatedContent = document.querySelector('.gated');
+        const userBadge = document.getElementById('userBadge');
+        const activeUserLabel = document.getElementById('activeUser');
+
+        let currentUser = null;
+
+        // Auth Navigation
+        toSignup.onclick = () => { loginForm.style.display = 'none'; signupForm.style.display = 'block'; };
+        toLogin.onclick = () => { loginForm.style.display = 'block'; signupForm.style.display = 'none'; };
+        loginOpenBtn.onclick = () => { authOverlay.style.display = 'flex'; };
+
+        function setAuthenticated(user) {
+            currentUser = user;
+            authOverlay.style.display = 'none';
+            gatedContent.style.filter = 'none';
+            gatedContent.style.pointerEvents = 'all';
+            gatedContent.style.opacity = '1';
+            userName.value = user.user_info.name;
+            userBadge.style.display = 'inline-block';
+            activeUserLabel.innerText = user.user_info.name;
+            loginOpenBtn.innerText = "Switch Account";
+        }
+
+        // Login Logic
+        loginBtn.onclick = async () => {
+            const name = document.getElementById('loginName').value;
+            const pass = document.getElementById('loginPass').value;
+            if (!name || !pass) return alert("Please enter credentials");
+
+            try {
+                const res = await fetch('/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, password: pass })
+                });
+                const data = await res.json();
+                if (data.status === "success") {
+                    if (!data.face_matched) {
+                        alert("Password accepted, but face not recognized. Accessing as " + name);
+                    }
+                    setAuthenticated(data.user);
+                } else {
+                    alert("Error: " + data.error);
+                }
+            } catch (e) {
+                alert("Login connection failed.");
+            }
+        };
+
+        // Signup Logic
+        signupBtn.onclick = async () => {
+            const name = document.getElementById('signName').value;
+            const pass = document.getElementById('signPass').value;
+            const age = document.getElementById('signAge').value;
+            const budget = document.getElementById('signBudget').value;
+            const concerns = document.getElementById('signConcerns').value;
+
+            if (!name || !pass) return alert("Missing fields");
+
+            try {
+                const res = await fetch('/signup', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ name, password: pass, age, budget, concerns })
+                });
+                const data = await res.json();
+                if (data.status === "success") {
+                    alert("Biometric Calibration Success! Profile Created.");
+                    setAuthenticated(data.user);
+                } else {
+                    alert("Registration failed: " + data.error);
+                }
+            } catch (e) {
+                alert("Signup connection failed.");
+            }
+        };
+
+        const scanBtn = document.getElementById('scanBtn');
+        const analyzeBtn = document.getElementById('analyzeBtn');
+        const reportOutput = document.getElementById('reportOutput');
+        const userName = document.getElementById('userName');
+        const userQuery = document.getElementById('userQuery');
+        const status = document.getElementById('status');
+
+        function updateDashboard(data) {
+            // Priority 1: Use raw numerical data if available for high precision
+            if (data.raw_data && data.raw_data.regions) {
+                const regions = data.raw_data.regions;
+                
+                // Calculate Smoothness from Texture (Inverse relationship)
+                // Avg texture typically 10-300. We map it to 0-100% smoothness.
+                const avgTexture = (regions.forehead.texture + regions.left_cheek.texture + regions.right_cheek.texture) / 3;
+                let smoothness = Math.max(10, Math.min(99, 100 - (avgTexture / 3)));
+                
+                // Calculate Lipid Balance from Shine
+                // Shine is 0.0 to 1.0. We map it to 0-100% lipid level.
+                const avgShine = (regions.nose.shine + regions.forehead.shine) / 2;
+                let lipid = Math.max(5, Math.min(99, avgShine * 100 + 35)); // 35% is base natural oil
+
+                document.getElementById('smoothScore').innerText = Math.round(smoothness) + '%';
+                document.getElementById('smoothBar').style.width = smoothness + '%';
+                document.getElementById('lipidVal').innerText = Math.round(lipid) + '%';
+                document.getElementById('lipidBar').style.width = lipid + '%';
+            } 
+            // Priority 2: Fallback to Keyword analysis
+            else {
+                const interp = data.interpretation.toLowerCase();
+                let smoothness = 85;
+                let oil = 40;
+
+                if (interp.includes("oily")) oil = 82;
+                if (interp.includes("texture")) smoothness = 62;
+                if (interp.includes("smooth")) smoothness = 96;
+                if (interp.includes("balanced")) { oil = 45; smoothness = 88; }
+
+                document.getElementById('smoothScore').innerText = smoothness + '%';
+                document.getElementById('smoothBar').style.width = smoothness + '%';
+                document.getElementById('lipidVal').innerText = oil + '%';
+                document.getElementById('lipidBar').style.width = oil + '%';
+            }
+            
+            document.getElementById('timestamp').innerText = "LAST SCAN: " + new Date().toLocaleTimeString();
+        }
+
+        function resetIdentity() {
+            userName.value = "";
+            userName.placeholder = "Enter correct name";
+            userName.focus();
+        }
+
+        scanBtn.onclick = async () => {
+            status.innerText = "⏳ PROCESSING BIOMETRICS...";
+            status.style.color = "#c9a0dc"; // Use the lavender-ish primary color
+
+            try {
+                const res = await fetch('/scan', { method: 'POST' });
+                const data = await res.json();
+
+                if (data.status === "success") {
+                    status.innerText = "✅ BIOMETRIC SYNCED";
+                    status.style.color = "#00ff88";
+                    userName.value = data.name;
+                    updateDashboard(data);
+
+                    reportOutput.innerHTML = `
+                        <div style="background: rgba(0,255,136,0.05); border-left:4px solid #00ff88; padding:20px; border-radius:10px;">
+                            <h3 style="color:#00ff88; margin-top:0;">Scan Successful</h3>
+                            <p><strong>Identity:</strong> ${data.name} 
+                                <button onclick="resetIdentity()" style="background:transparent; border:1px solid var(--accent); color:var(--accent); font-size:0.6rem; padding:2px 5px; cursor:pointer; border-radius:4px; margin-left:10px;">Not you?</button>
+                            </p>
+                            <p><strong>Initial Diagnosis:</strong> ${data.interpretation}</p>
+                        </div>
+                        ${medicalDisclaimerHTML}
+                    `;
+                } else {
+                    status.innerText = "❌ SCAN FAILED";
+                    status.style.color = "#ff7675"; // Use the accent color
+                    console.error("Scan error:", data.error);
+                }
+            } catch (e) {
+                status.innerText = "⚠️ SYSTEM ERROR";
+                console.error("Network/System error during scan:", e);
+            }
+        };
+
+        analyzeBtn.onclick = async () => {
+            if (!userQuery.value) {
+                alert("Please enter a skin concern.");
+                return;
+            }
+
+            reportOutput.innerHTML = `
+                <div class="loading-text">
+                    <h3>Consulting Neural Experts...</h3>
+                    <p style="font-size:0.8rem; margin-top:10px; opacity:0.6;">Analyzing ingredients, skin type, and medical database.</p>
+                </div>
+            `;
+
+            try {
+                const res = await fetch('/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        user_name: userName.value || "Anonymous Guest",
+                        query: userQuery.value
+                    })
+                });
+                const data = await res.json();
+
+                // Render with Marked.js for professional markdown look
+                reportOutput.innerHTML = marked.parse(data.response) + medicalDisclaimerHTML;
+            } catch (e) {
+                reportOutput.innerHTML = "<p>AI consultation failed. Check connection.</p>" + medicalDisclaimerHTML;
+            }
+        };
+    </script>
+</body>
+
+</html>
