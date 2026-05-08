@@ -1,6 +1,6 @@
-# CASMOCART AI: Precision Dermatological Intelligence 🧬✨
+# COSMOCART AI: Precision Dermatological Intelligence 🧬✨
 
-**Casmocart AI** is a next-generation AI-powered skincare analysis tool. It uses real-time computer vision and neural mesh tracking to provide clinical-grade skin assessments and personalized dermatological recommendations.
+**CosmoCart AI** is a next-generation AI-powered skincare analysis tool. It uses real-time computer vision and neural mesh tracking to provide clinical-grade skin assessments and personalized dermatological recommendations.
 
 ---
 
@@ -40,8 +40,8 @@
 
 ### 2. Clone the Repository
 ```bash
-git clone https://github.com/your-repo/ai-for-her.git
-cd ai-for-her
+git clone https://github.com/SARATH062005/CosmoCart-AI.git
+cd CosmoCart-AI
 ```
 
 ### 3. Install Dependencies
@@ -81,7 +81,7 @@ OPENROUTER_API_KEY = "your_key_here"
 
 ## 👥 Meet the Team
 Developed with passion by dedicated contributors:
-*   **Sanjay** (@sanjayCodeXdev) — Lead Developer & AI Architect
+*   **Sarath** (@SARATH062005) — Lead Developer & AI Architect
 
 ---
 
